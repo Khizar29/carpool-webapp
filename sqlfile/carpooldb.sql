@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.14
--- http://www.phpmyadmin.net
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 28, 2017 at 07:57 PM
--- Server version: 5.6.26
--- PHP Version: 5.5.28
+-- Generation Time: Dec 06, 2023 at 01:59 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,113 +27,98 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
-CREATE TABLE IF NOT EXISTS `admin` (
+CREATE TABLE `admin` (
   `id` int(11) NOT NULL,
   `UserName` varchar(100) NOT NULL,
   `Password` varchar(100) NOT NULL,
-  `updationDate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `updationDate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`id`, `UserName`, `Password`, `updationDate`) VALUES
-(1, 'admin', '5c428d8875d2948607f3e3fe134d71b4', '2017-06-18 12:22:38');
+(1, 'admin', '5c428d8875d2948607f3e3fe134d71b4', '2017-06-18 12:22:38'),
+(2, 'admin@gmail.com', 'abcd@12', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tblbooking`
+-- Table structure for table `tblbill`
 --
 
-CREATE TABLE IF NOT EXISTS `tblbooking` (
-  `id` int(11) NOT NULL,
-  `userEmail` varchar(100) DEFAULT NULL,
-  `VehicleId` int(11) DEFAULT NULL,
-  `FromDate` varchar(20) DEFAULT NULL,
-  `ToDate` varchar(20) DEFAULT NULL,
-  `message` varchar(255) DEFAULT NULL,
-  `Status` int(11) DEFAULT NULL,
-  `PostingDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+CREATE TABLE `tblbill` (
+  `billid` int(11) NOT NULL,
+  `carid` int(11) NOT NULL,
+  `Amount` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tblbooking`
+-- Dumping data for table `tblbill`
 --
 
-INSERT INTO `tblbooking` (`id`, `userEmail`, `VehicleId`, `FromDate`, `ToDate`, `message`, `Status`, `PostingDate`) VALUES
-(1, 'test@gmail.com', 2, '22/06/2017', '25/06/2017', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco', 1, '2017-06-19 20:15:43'),
-(2, 'test@gmail.com', 3, '30/06/2017', '02/07/2017', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco', 2, '2017-06-26 20:15:43'),
-(3, 'test@gmail.com', 4, '02/07/2017', '07/07/2017', 'Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ', 0, '2017-06-26 21:10:06');
+INSERT INTO `tblbill` (`billid`, `carid`, `Amount`) VALUES
+(1, 1, 300),
+(2, 4, 2000),
+(3, 5, 600),
+(4, 6, 0),
+(6, 6, 1500),
+(7, 1, 400),
+(8, 6, 200),
+(9, 5, 200),
+(10, 6, 600),
+(11, 8, 250);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tblbrands`
+-- Table structure for table `tblcars`
 --
 
-CREATE TABLE IF NOT EXISTS `tblbrands` (
-  `id` int(11) NOT NULL,
-  `BrandName` varchar(120) NOT NULL,
-  `CreationDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+CREATE TABLE `tblcars` (
+  `carid` int(11) NOT NULL,
+  `carnumber` varchar(10) NOT NULL,
+  `carname` varchar(255) NOT NULL,
+  `company` varchar(255) NOT NULL,
+  `Image` varchar(120) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tblbrands`
+-- Dumping data for table `tblcars`
 --
 
-INSERT INTO `tblbrands` (`id`, `BrandName`, `CreationDate`, `UpdationDate`) VALUES
-(1, 'Maruti', '2017-06-18 16:24:34', '2017-06-19 06:42:23'),
-(2, 'BMW', '2017-06-18 16:24:50', NULL),
-(3, 'Audi', '2017-06-18 16:25:03', NULL),
-(4, 'Nissan', '2017-06-18 16:25:13', NULL),
-(5, 'Toyota', '2017-06-18 16:25:24', NULL),
-(7, 'Marutiu', '2017-06-19 06:22:13', NULL);
+INSERT INTO `tblcars` (`carid`, `carnumber`, `carname`, `company`, `Image`) VALUES
+(1, 'BUN-664', 'Alto', 'suzuki', 'D:\\carpoolimg\\WhatsApp Image 2023-06-14 at 21.08.05.png'),
+(3, 'MKE-223', 'city', 'HONDA', 'D:\\carpoolimg\\WhatsApp Image 2023-06-14 at 21.08.05 (1).png'),
+(4, 'BML-346', 'Swift', 'Suzuki', 'D:\\carpoolimg\\image.png'),
+(5, 'GPA-029', 'Alsvin', 'CHANGAN', 'D:\\carpoolimg\\image.png'),
+(6, 'KLB-123', 'CHIRON', 'BUGGATI', 'D:\\carpoolimg\\k213329lab7task1.png'),
+(7, 'KBC-990', 'civic', 'HONDA', 'D:\\carpoolimg\\image.png'),
+(8, 'KLE-332', 'Dayz', 'nissan', 'D:\\carpoolimg\\WhatsApp Image 2023-11-26 at 13.09.44_0867c4e0.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tblcontactusinfo`
+-- Table structure for table `tbldrivers`
 --
 
-CREATE TABLE IF NOT EXISTS `tblcontactusinfo` (
-  `id` int(11) NOT NULL,
-  `Address` tinytext,
-  `EmailId` varchar(255) DEFAULT NULL,
-  `ContactNo` char(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+CREATE TABLE `tbldrivers` (
+  `driverid` int(11) NOT NULL,
+  `carid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tblcontactusinfo`
+-- Dumping data for table `tbldrivers`
 --
 
-INSERT INTO `tblcontactusinfo` (`id`, `Address`, `EmailId`, `ContactNo`) VALUES
-(1, 'Test Demo test demo																									', 'test@test.com', '8585233222');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tblcontactusquery`
---
-
-CREATE TABLE IF NOT EXISTS `tblcontactusquery` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `EmailId` varchar(120) DEFAULT NULL,
-  `ContactNumber` char(11) DEFAULT NULL,
-  `Message` longtext,
-  `PostingDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tblcontactusquery`
---
-
-INSERT INTO `tblcontactusquery` (`id`, `name`, `EmailId`, `ContactNumber`, `Message`, `PostingDate`, `status`) VALUES
-(1, 'Harry Den', 'webhostingamigo@gmail.com', '2147483647', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum', '2017-06-18 10:03:07', 1);
+INSERT INTO `tbldrivers` (`driverid`, `carid`) VALUES
+(5, 1),
+(5, 3),
+(5, 5),
+(5, 7),
+(10, 6),
+(10, 8);
 
 -- --------------------------------------------------------
 
@@ -140,63 +126,104 @@ INSERT INTO `tblcontactusquery` (`id`, `name`, `EmailId`, `ContactNumber`, `Mess
 -- Table structure for table `tblpages`
 --
 
-CREATE TABLE IF NOT EXISTS `tblpages` (
+CREATE TABLE `tblpages` (
   `id` int(11) NOT NULL,
   `PageName` varchar(255) DEFAULT NULL,
   `type` varchar(255) NOT NULL DEFAULT '',
   `detail` longtext NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tblpages`
 --
 
 INSERT INTO `tblpages` (`id`, `PageName`, `type`, `detail`) VALUES
-(1, 'Terms and Conditions', 'terms', '<P align=justify><FONT size=2><STRONG><FONT color=#990000>(1) ACCEPTANCE OF TERMS</FONT><BR><BR></STRONG>Welcome to Yahoo! India. 1Yahoo Web Services India Private Limited Yahoo", "we" or "us" as the case may be) provides the Service (defined below) to you, subject to the following Terms of Service ("TOS"), which may be updated by us from time to time without notice to you. You can review the most current version of the TOS at any time at: <A href="http://in.docs.yahoo.com/info/terms/">http://in.docs.yahoo.com/info/terms/</A>. In addition, when using particular Yahoo services or third party services, you and Yahoo shall be subject to any posted guidelines or rules applicable to such services which may be posted from time to time. All such guidelines or rules, which maybe subject to change, are hereby incorporated by reference into the TOS. In most cases the guides and rules are specific to a particular part of the Service and will assist you in applying the TOS to that part, but to the extent of any inconsistency between the TOS and any guide or rule, the TOS will prevail. We may also offer other services from time to time that are governed by different Terms of Services, in which case the TOS do not apply to such other services if and to the extent expressly excluded by such different Terms of Services. Yahoo also may offer other services from time to time that are governed by different Terms of Services. These TOS do not apply to such other services that are governed by different Terms of Service. </FONT></P>\r\n<P align=justify><FONT size=2>Welcome to Yahoo! India. Yahoo Web Services India Private Limited Yahoo", "we" or "us" as the case may be) provides the Service (defined below) to you, subject to the following Terms of Service ("TOS"), which may be updated by us from time to time without notice to you. You can review the most current version of the TOS at any time at: </FONT><A href="http://in.docs.yahoo.com/info/terms/"><FONT size=2>http://in.docs.yahoo.com/info/terms/</FONT></A><FONT size=2>. In addition, when using particular Yahoo services or third party services, you and Yahoo shall be subject to any posted guidelines or rules applicable to such services which may be posted from time to time. All such guidelines or rules, which maybe subject to change, are hereby incorporated by reference into the TOS. In most cases the guides and rules are specific to a particular part of the Service and will assist you in applying the TOS to that part, but to the extent of any inconsistency between the TOS and any guide or rule, the TOS will prevail. We may also offer other services from time to time that are governed by different Terms of Services, in which case the TOS do not apply to such other services if and to the extent expressly excluded by such different Terms of Services. Yahoo also may offer other services from time to time that are governed by different Terms of Services. These TOS do not apply to such other services that are governed by different Terms of Service. </FONT></P>\r\n<P align=justify><FONT size=2>Welcome to Yahoo! India. Yahoo Web Services India Private Limited Yahoo", "we" or "us" as the case may be) provides the Service (defined below) to you, subject to the following Terms of Service ("TOS"), which may be updated by us from time to time without notice to you. You can review the most current version of the TOS at any time at: </FONT><A href="http://in.docs.yahoo.com/info/terms/"><FONT size=2>http://in.docs.yahoo.com/info/terms/</FONT></A><FONT size=2>. In addition, when using particular Yahoo services or third party services, you and Yahoo shall be subject to any posted guidelines or rules applicable to such services which may be posted from time to time. All such guidelines or rules, which maybe subject to change, are hereby incorporated by reference into the TOS. In most cases the guides and rules are specific to a particular part of the Service and will assist you in applying the TOS to that part, but to the extent of any inconsistency between the TOS and any guide or rule, the TOS will prevail. We may also offer other services from time to time that are governed by different Terms of Services, in which case the TOS do not apply to such other services if and to the extent expressly excluded by such different Terms of Services. Yahoo also may offer other services from time to time that are governed by different Terms of Services. These TOS do not apply to such other services that are governed by different Terms of Service. </FONT></P>'),
-(2, 'Privacy Policy', 'privacy', '<span style="color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat</span>'),
-(3, 'About Us ', 'aboutus', '<span style="color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat</span>'),
-(11, 'FAQs', 'faqs', '																														<span style="color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;">Address------Test &nbsp; &nbsp;dsfdsfds</span>');
+(1, 'Terms and Conditions', 'terms', '																				<p align=\"justify\"><span style=\"font-weight: bold; font-size: large;\">**Terms and Conditions for Carpooling Website**</span><font size=\"2\"><strong><br></strong></font></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small; font-weight: bold;\">**1. Acceptance of Terms**</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small;\">By accessing and using our carpooling website, you agree to comply with and be bound by these terms and conditions. If you do not agree with any part of these terms, you may not use our services.</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small; font-weight: bold;\">**2. User Eligibility**</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small;\">You must be at least 18 years old to use our carpooling services. By using the website, you confirm that you meet this eligibility requirement.</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small;\">**3. User Responsibilities**</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small; font-weight: bold;\">a. **User Information:**&nbsp;</span><span style=\"font-size: small;\">You are responsible for providing accurate and up-to-date information during the registration process.</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small;\"><span style=\"font-weight: bold;\">b. **Safety:** </span>Users are responsible for their own safety during carpooling arrangements. It is recommended to verify the identity of the fellow carpoolers before agreeing to share rides.</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small;\"><span style=\"font-weight: bold;\">c. **Compliance:**</span> Users must comply with all applicable laws and regulations during the carpooling arrangement.</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small; font-weight: bold;\">**4. User Conduct**</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small;\"><span style=\"font-weight: bold;\">a. **Respect:** </span>Users must treat each other with respect and courtesy. Any form of harassment, discrimination, or inappropriate behavior is strictly prohibited.</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small;\"><span style=\"font-weight: bold;\">b. **Communication:** </span>Users should communicate clearly and promptly with each other regarding the carpooling arrangements, including pick-up and drop-off locations and times.</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small; font-weight: bold;\">**5. Privacy**</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small;\"><span style=\"font-weight: bold;\">a. **Data Security:**</span> We take the privacy and security of user data seriously. Please refer to our Privacy Policy for details on how we collect, use, and protect your personal information.</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small;\"><span style=\"font-weight: bold;\">b. **Sharing Information:**</span> Users agree to share only necessary information with fellow carpoolers for the purpose of coordinating rides.</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small; font-weight: bold;\">**6. Payment and Fees**</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small;\"><span style=\"font-weight: bold;\">a. **Payment:**</span> Users may agree on a fair and reasonable contribution towards fuel costs or other expenses related to the carpooling arrangement.</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small;\"><span style=\"font-weight: bold;\">b. **No Profit:**</span> Users are not allowed to make a profit from the carpooling service provided through our platform.</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small; font-weight: bold;\">**7. Termination of Service**</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small;\">We reserve the right to terminate or suspend a user\'s account, without notice, for any violation of these terms and conditions or for any other reason we deem appropriate.</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small; font-weight: bold;\">**8. Modifications to Terms**</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small;\">We may update or modify these terms and conditions at any time. Users are responsible for regularly reviewing these terms. Continued use of the service after changes constitutes acceptance of the modified terms.</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small; font-weight: bold;\">**9. Disclaimer of Liability**</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small;\"><span style=\"font-weight: bold;\">a. **Assumption of Risk:**</span> Users acknowledge and agree that they use the carpooling service at their own risk.</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small;\"><span style=\"font-weight: bold;\">b. **No Liability:**</span> We are not liable for any damages or losses arising from the use of our carpooling platform.</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small; font-weight: bold;\">**10. Governing Law**</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small;\">These terms and conditions are governed by and construed in accordance with the laws of [Your Jurisdiction].</span></p><p align=\"justify\"><span style=\"font-size: small;\"><br></span></p><p align=\"justify\"><span style=\"font-size: small;\">By using our carpooling website, you acknowledge that you have read, understood, and agree to these terms and conditions.</span></p>\r\n										\r\n										'),
+(2, 'Privacy Policy', 'privacy', '<span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;\">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat</span>'),
+(3, 'About Us ', 'aboutus', '<div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-size: x-large; font-weight: bold; text-decoration-line: underline; font-family: verdana;\">Welcome to AFK Carpool!</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\"><br></span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\">We are a dynamic team of computer science enthusiasts hailing from FAST-NUCES University, brought together by a shared passion for technology and innovation. Our team comprises dedicated individuals, each bringing a unique set of skills and perspectives to the table.</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\"><br></span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-size: large; font-weight: bold; text-decoration-line: underline; font-family: verdana;\">Meet the Team</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\"><br></span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-weight: bold; font-family: verdana;\">Syed Khizar Ali</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\">Position: Co-Founder and Lead Developer</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\"><br></span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\">Syed Khizar Ali is a computer science student with a keen interest in software development. With a knack for turning ideas into reality through code, he leads our team in creating robust and innovative solutions. Khizar is not just a developer; he\'s a problem solver who thrives on challenges.</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\"><br></span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-weight: bold; font-family: verdana;\">Fatima Ali</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\">Position: UX/UI Designer</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\"><br></span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\">Meet Fatima Ali, our creative force behind the visuals. As a UX/UI designer, she ensures that our products not only function seamlessly but also offer an exceptional user experience. Fatima\'s design philosophy revolves around simplicity, elegance, and user-centricity.</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\"><br></span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-weight: bold; font-family: verdana;\">Syed Muhammad Ali</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\">Position: Co-Founder and Technical Lead</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\"><br></span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\">Syed Muhammad Ali is our technical maestro. With a profound understanding of computer science concepts, he takes charge as our technical lead. Muhammad Ali is committed to ensuring that our projects are not only cutting-edge but also scalable and efficient.</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\"><br></span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-size: large; font-weight: bold; text-decoration-line: underline; font-family: verdana;\">Our Mission</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\"><br></span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\">At AFK Carpool, we are on a mission to revolutionize the way people commute by providing a seamless and secure carpooling experience. Recognizing the challenges individuals face in their everyday commuting, we are dedicated to offering an easy and safer alternative through our innovative platform.</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\"><br></span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-weight: bold; font-family: verdana;\">Helping You Navigate the Carpooling Struggle</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\"><br></span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\">We understand the daily struggle of finding reliable transportation. Our platform aims to bridge the gap between commuters, making carpooling not only accessible but also efficient. Whether you\'re a daily commuter or an occasional traveler, we\'re here to simplify your journey.</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\"><br></span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-weight: bold; font-family: verdana;\">Easy and Safer Commutes</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\"><br></span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\">Safety is our top priority. With advanced features and a user-friendly interface, we strive to create a community where commuters can connect with confidence. Through our platform, we provide a space where trust is built, and journeys are shared securely.</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\"><br></span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-weight: bold; font-size: large; text-decoration-line: underline; font-family: verdana;\">Join Us on Our Journey</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\"><br></span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\">We believe in the power of collaboration and welcome opportunities to connect with like-minded individuals and organizations. If you share our passion for technology and innovation, we invite you to join us on this exciting journey.</span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\"><br></span></div><div style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0); font-family: verdana;\">Thank you for visiting AFK Carpool. We look forward to creating, exploring, and innovating together!</span></div>'),
+(11, 'FAQs', 'faqs', '																														<span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;\">Address------Test &nbsp; &nbsp;dsfdsfds</span>');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tblsubscribers`
+-- Table structure for table `tblpassengers`
 --
 
-CREATE TABLE IF NOT EXISTS `tblsubscribers` (
-  `id` int(11) NOT NULL,
-  `SubscriberEmail` varchar(120) DEFAULT NULL,
-  `PostingDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+CREATE TABLE `tblpassengers` (
+  `pid` int(11) NOT NULL,
+  `poolingid` int(11) NOT NULL,
+  `seatsRequested` int(11) NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tblsubscribers`
+-- Dumping data for table `tblpassengers`
 --
 
-INSERT INTO `tblsubscribers` (`id`, `SubscriberEmail`, `PostingDate`) VALUES
-(1, 'anuj.lpu1@gmail.com', '2017-06-22 16:35:32');
+INSERT INTO `tblpassengers` (`pid`, `poolingid`, `seatsRequested`, `status`) VALUES
+(5, 18, 2, 0),
+(5, 19, 3, 1),
+(10, 18, 1, 1),
+(10, 19, 1, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbltestimonial`
+-- Table structure for table `tblpooling`
 --
 
-CREATE TABLE IF NOT EXISTS `tbltestimonial` (
-  `id` int(11) NOT NULL,
-  `UserEmail` varchar(100) NOT NULL,
-  `Testimonial` mediumtext NOT NULL,
-  `PostingDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+CREATE TABLE `tblpooling` (
+  `poolingid` int(11) NOT NULL,
+  `carid` int(11) NOT NULL,
+  `routeid` int(11) DEFAULT NULL,
+  `starttime` time NOT NULL,
+  `endtime` time NOT NULL,
+  `date` date NOT NULL,
+  `seatprice` int(11) NOT NULL,
+  `seating` int(11) NOT NULL,
+  `bookedseats` int(11) DEFAULT 0,
+  `billid` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tbltestimonial`
+-- Dumping data for table `tblpooling`
 --
 
-INSERT INTO `tbltestimonial` (`id`, `UserEmail`, `Testimonial`, `PostingDate`, `status`) VALUES
-(1, 'test@gmail.com', 'Test Test', '2017-06-18 07:44:31', 1),
-(2, 'test@gmail.com', '\nLorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam nibh. Nunc varius facilis', '2017-06-18 07:46:05', 1);
+INSERT INTO `tblpooling` (`poolingid`, `carid`, `routeid`, `starttime`, `endtime`, `date`, `seatprice`, `seating`, `bookedseats`, `billid`) VALUES
+(17, 6, 3, '14:00:00', '15:00:00', '2023-12-07', 200, 3, 0, 8),
+(18, 5, 4, '14:00:00', '15:00:00', '2023-12-13', 200, 3, 1, 9),
+(19, 6, 10, '12:00:00', '14:00:00', '2023-12-21', 200, 7, 3, 10),
+(20, 8, 6, '14:00:00', '16:00:00', '2023-12-08', 250, 3, 0, 11);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tblroutes`
+--
+
+CREATE TABLE `tblroutes` (
+  `routeid` int(11) NOT NULL,
+  `description` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tblroutes`
+--
+
+INSERT INTO `tblroutes` (`routeid`, `description`) VALUES
+(0, 'No desired route'),
+(1, 'Gulberg->waterpump->Gulshan chowrangi -> aladdin -> millinium -> Fast'),
+(3, 'Nipa->Gulshan Aladin->Johar Mor-> Millennium/Askari->Malir Halt-> FAST'),
+(4, 'Fast-> Drigh road - > millenium - > gulshan chowrangi - > waterpump - > ayesha manzil-> 5star'),
+(5, 'Gulshan-e-shamim-> gulshan chowrangi-> johar mor-> rado bakery-> habib uni-> airport->fast'),
+(6, 'Fast - malir halt - model mord - tank chowk - cp6 - cp5 - safoora'),
+(8, 'Fast ->millinium -> aladdin -> Gulshan chowrangi -> lucky one -> nagan chowrangi -> North Nazimabad (Five star)'),
+(9, 'Fast->halt->drigh road->shahraeh faisal->awaami markaz->baloch pull->10 pearls'),
+(10, 'Nazimabad-> KdaScheme1-.>Fast'),
+(11, 'Saddar -> Empress Market -> Karachi Zoo -> Quaid\'s Mausoleum -> Mohatta Palace -> Clifton Underpass -> Sea View'),
+(12, 'Clifton Beach -> Teen Talwar -> PIDC -> Do Talwar -> Kothari Parade -> Arts Council -> Frere Hall -> National Stadium'),
+(13, 'Pakistan Maritime Museum -> PAF Museum -> Lucky One Mall -> Karachi University -> Hassan Square -> Civic Center -> Bahria Town'),
+(14, 'Karachi Port Trust -> Custom House -> City Railway Station -> Merewether Tower -> Port Grand -> Native Jetty Bridge -> Clifton Seafront');
 
 -- --------------------------------------------------------
 
@@ -204,76 +231,32 @@ INSERT INTO `tbltestimonial` (`id`, `UserEmail`, `Testimonial`, `PostingDate`, `
 -- Table structure for table `tblusers`
 --
 
-CREATE TABLE IF NOT EXISTS `tblusers` (
+CREATE TABLE `tblusers` (
   `id` int(11) NOT NULL,
   `FullName` varchar(120) DEFAULT NULL,
   `EmailId` varchar(100) DEFAULT NULL,
   `Password` varchar(100) DEFAULT NULL,
+  `Gender` varchar(11) NOT NULL,
   `ContactNo` char(11) DEFAULT NULL,
   `dob` varchar(100) DEFAULT NULL,
   `Address` varchar(255) DEFAULT NULL,
   `City` varchar(100) DEFAULT NULL,
   `Country` varchar(100) DEFAULT NULL,
-  `RegDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `RegDate` timestamp NULL DEFAULT current_timestamp(),
+  `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tblusers`
 --
 
-INSERT INTO `tblusers` (`id`, `FullName`, `EmailId`, `Password`, `ContactNo`, `dob`, `Address`, `City`, `Country`, `RegDate`, `UpdationDate`) VALUES
-(1, 'Harry Den', 'demo@gmail.com', 'f925916e2754e5e03f75dd58a5733251', '2147483647', NULL, NULL, NULL, NULL, '2017-06-17 19:59:27', '2017-06-26 21:02:58'),
-(2, 'AK', 'anuj@gmail.com', 'f925916e2754e5e03f75dd58a5733251', '8285703354', NULL, NULL, NULL, NULL, '2017-06-17 20:00:49', '2017-06-26 21:03:09'),
-(3, 'Mark K', 'webhostingamigo@gmail.com', 'f09df7868d52e12bba658982dbd79821', '09999857868', '03/02/1990', 'PKL', 'PKL', 'PKL', '2017-06-17 20:01:43', '2017-06-17 21:07:41'),
-(4, 'Tom K', 'test@gmail.com', '5c428d8875d2948607f3e3fe134d71b4', '9999857868', '', 'PKL', 'XYZ', 'XYZ', '2017-06-17 20:03:36', '2017-06-26 19:18:14');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tblvehicles`
---
-
-CREATE TABLE IF NOT EXISTS `tblvehicles` (
-  `id` int(11) NOT NULL,
-  `VehiclesTitle` varchar(150) DEFAULT NULL,
-  `VehiclesBrand` int(11) DEFAULT NULL,
-  -- `VehiclesOverview` longtext,
-  -- `PricePerDay` int(11) DEFAULT NULL,
-  -- `FuelType` varchar(100) DEFAULT NULL,
-  `ModelYear` int(6) DEFAULT NULL,
-    -- `SeatingCapacity` int(11) DEFAULT NULL,
-  -- `Vimage1` varchar(120) DEFAULT NULL,
-  -- `Vimage2` varchar(120) DEFAULT NULL,
-  -- `Vimage3` varchar(120) DEFAULT NULL,
-  -- `Vimage4` varchar(120) DEFAULT NULL,
-  -- `Vimage5` varchar(120) DEFAULT NULL,
-  `AirConditioner` int(11) DEFAULT NULL,
-  -- `PowerDoorLocks` int(11) DEFAULT NULL,
-  -- `AntiLockBrakingSystem` int(11) DEFAULT NULL,
-  -- `BrakeAssist` int(11) DEFAULT NULL,
-  -- `PowerSteering` int(11) DEFAULT NULL,
-  -- `DriverAirbag` int(11) DEFAULT NULL,
-  -- `PassengerAirbag` int(11) DEFAULT NULL,
-  -- `PowerWindows` int(11) DEFAULT NULL,
-  -- `CDPlayer` int(11) DEFAULT NULL,
-  -- `CentralLocking` int(11) DEFAULT NULL,
-  -- `CrashSensor` int(11) DEFAULT NULL,
-  -- `LeatherSeats` int(11) DEFAULT NULL,
-  -- `RegDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  -- `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tblvehicles`
---
-
-INSERT INTO `tblvehicles` (`id`, `VehiclesTitle`, `VehiclesBrand`, `VehiclesOverview`, `PricePerDay`, `FuelType`, `ModelYear`, `SeatingCapacity`, `Vimage1`, `Vimage2`, `Vimage3`, `Vimage4`, `Vimage5`, `AirConditioner`, `PowerDoorLocks`, `AntiLockBrakingSystem`, `BrakeAssist`, `PowerSteering`, `DriverAirbag`, `PassengerAirbag`, `PowerWindows`, `CDPlayer`, `CentralLocking`, `CrashSensor`, `LeatherSeats`, `RegDate`, `UpdationDate`) VALUES
-(1, 'ytb rvtr', 2, 'vtretrvet', 345345, 'Petrol', 3453, 7, 'knowledge_base_bg.jpg', '20170523_145633.jpg', 'phpgurukul-1.png', 'social-icons.png', '', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2017-06-19 11:46:23', '2017-06-20 18:38:13'),
-(2, 'Test Demoy', 2, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam nibh. Nunc varius facilisis eros. Sed erat. In in velit quis arcu ornare laoreet. Curabitur adipiscing luctus massa. Integer ut purus ac augue commodo commodo. Nunc nec mi eu justo tempor consectetuer. Etiam vitae nisl. In dignissim lacus ut ante. Cras elit lectus, bibendum a, adipiscing vitae, commodo et, dui. Ut tincidunt tortor. Donec nonummy, enim in lacinia pulvinar, velit tellus scelerisque augue, ac posuere libero urna eget neque. Cras ipsum. Vestibulum pretium, lectus nec venenatis volutpat, purus lectus ultrices risus, a condimentum risus mi et quam. Pellentesque auctor fringilla neque. Duis eu massa ut lorem iaculis vestibulum. Maecenas facilisis elit sed justo. Quisque volutpat malesuada velit. ', 859, 'CNG', 2015, 4, 'car_755x430.png', 'looking-used-car.png', 'banner-image.jpg', 'about_services_faq_bg.jpg', '', 1, 1, 1, 1, 1, 1, 1, NULL, 1, 1, NULL, NULL, '2017-06-19 16:16:17', '2017-06-21 16:57:11'),
-(3, 'Lorem ipsum', 4, 'Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum', 563, 'CNG', 2012, 5, 'featured-img-3.jpg', 'dealer-logo.jpg', 'img_390x390.jpg', 'listing_img3.jpg', '', 1, 1, 1, 1, 1, 1, NULL, 1, 1, NULL, NULL, NULL, '2017-06-19 16:18:20', '2017-06-20 18:40:11'),
-(4, 'Lorem ipsum', 1, 'Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum', 5636, 'CNG', 2012, 5, 'featured-img-3.jpg', 'featured-img-1.jpg', 'featured-img-1.jpg', 'featured-img-1.jpg', '', 1, 1, 1, 1, 1, 1, 1, 1, 1, NULL, NULL, NULL, '2017-06-19 16:18:43', '2017-06-20 18:44:12'),
-(5, 'ytb rvtr', 5, 'vtretrvet', 345345, 'Petrol', 3453, 7, 'car_755x430.png', NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2017-06-20 17:57:09', '2017-06-21 16:56:43');
+INSERT INTO `tblusers` (`id`, `FullName`, `EmailId`, `Password`, `Gender`, `ContactNo`, `dob`, `Address`, `City`, `Country`, `RegDate`, `UpdationDate`) VALUES
+(1, 'Harry Den', 'demo@gmail.com', 'f925916e2754e5e03f75dd58a5733251', '', '2147483647', NULL, NULL, NULL, NULL, '2017-06-17 19:59:27', '2017-06-26 21:02:58'),
+(4, 'Tom K', 'test@gmail.com', '5c428d8875d2948607f3e3fe134d71b4', '', '9999857868', '', 'PKL', 'XYZ', 'XYZ', '2017-06-17 20:03:36', '2017-06-26 19:18:14'),
+(5, 'khizar ali', 'k213329@nu.edu.pk', 'd57587b0f5bbb0c3fe9d8cb16e97b0fe', 'male', '3212153986', NULL, NULL, NULL, NULL, '2023-11-23 10:05:20', NULL),
+(6, 'ahsan hussain', 'k214942@nu.edu.pk', '74870a2fd40b4d9926a5849f64fa2fca', 'male', '3212474391', NULL, NULL, NULL, NULL, '2023-11-27 05:17:15', NULL),
+(7, 'Fatima Ali', 'k213249@nu.edu.pk', '1799bb39b47c7ebb9a450000b08ae462', 'female', '9212153986', NULL, NULL, NULL, NULL, '2023-12-02 13:00:14', NULL),
+(10, 'Muhammad Ali', 'k213335@nu.edu.pk', 'e9c24de0272e37d5a8bfd081f131f002', 'male', '3012969997', NULL, NULL, NULL, NULL, '2023-12-05 18:59:02', NULL);
 
 --
 -- Indexes for dumped tables
@@ -286,28 +269,24 @@ ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tblbooking`
+-- Indexes for table `tblbill`
 --
-ALTER TABLE `tblbooking`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `tblbill`
+  ADD PRIMARY KEY (`billid`),
+  ADD KEY `fk_bill_car` (`carid`);
 
 --
--- Indexes for table `tblbrands`
+-- Indexes for table `tblcars`
 --
-ALTER TABLE `tblbrands`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `tblcars`
+  ADD PRIMARY KEY (`carid`);
 
 --
--- Indexes for table `tblcontactusinfo`
+-- Indexes for table `tbldrivers`
 --
-ALTER TABLE `tblcontactusinfo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tblcontactusquery`
---
-ALTER TABLE `tblcontactusquery`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `tbldrivers`
+  ADD PRIMARY KEY (`driverid`,`carid`),
+  ADD KEY `fk_driver_car` (`carid`);
 
 --
 -- Indexes for table `tblpages`
@@ -316,27 +295,31 @@ ALTER TABLE `tblpages`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tblsubscribers`
+-- Indexes for table `tblpassengers`
 --
-ALTER TABLE `tblsubscribers`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `tblpassengers`
+  ADD PRIMARY KEY (`pid`,`poolingid`),
+  ADD KEY `fk_passenger_pooling` (`poolingid`);
 
 --
--- Indexes for table `tbltestimonial`
+-- Indexes for table `tblpooling`
 --
-ALTER TABLE `tbltestimonial`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `tblpooling`
+  ADD PRIMARY KEY (`poolingid`),
+  ADD KEY `fk_pooling_route` (`routeid`),
+  ADD KEY `fk_pooling_bill` (`billid`),
+  ADD KEY `fk_pooling_car` (`carid`);
+
+--
+-- Indexes for table `tblroutes`
+--
+ALTER TABLE `tblroutes`
+  ADD PRIMARY KEY (`routeid`);
 
 --
 -- Indexes for table `tblusers`
 --
 ALTER TABLE `tblusers`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tblvehicles`
---
-ALTER TABLE `tblvehicles`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -347,56 +330,77 @@ ALTER TABLE `tblvehicles`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
--- AUTO_INCREMENT for table `tblbooking`
+-- AUTO_INCREMENT for table `tblbill`
 --
-ALTER TABLE `tblbooking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+ALTER TABLE `tblbill`
+  MODIFY `billid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
 --
--- AUTO_INCREMENT for table `tblbrands`
+-- AUTO_INCREMENT for table `tblcars`
 --
-ALTER TABLE `tblbrands`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
---
--- AUTO_INCREMENT for table `tblcontactusinfo`
---
-ALTER TABLE `tblcontactusinfo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `tblcontactusquery`
---
-ALTER TABLE `tblcontactusquery`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+ALTER TABLE `tblcars`
+  MODIFY `carid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT for table `tblpages`
 --
 ALTER TABLE `tblpages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
 --
--- AUTO_INCREMENT for table `tblsubscribers`
+-- AUTO_INCREMENT for table `tblpooling`
 --
-ALTER TABLE `tblsubscribers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+ALTER TABLE `tblpooling`
+  MODIFY `poolingid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
 --
--- AUTO_INCREMENT for table `tbltestimonial`
+-- AUTO_INCREMENT for table `tblroutes`
 --
-ALTER TABLE `tbltestimonial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+ALTER TABLE `tblroutes`
+  MODIFY `routeid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
 --
 -- AUTO_INCREMENT for table `tblusers`
 --
 ALTER TABLE `tblusers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
--- AUTO_INCREMENT for table `tblvehicles`
+-- Constraints for dumped tables
 --
-ALTER TABLE `tblvehicles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+
+--
+-- Constraints for table `tblbill`
+--
+ALTER TABLE `tblbill`
+  ADD CONSTRAINT `fk_bill_car` FOREIGN KEY (`carid`) REFERENCES `tblcars` (`carid`);
+
+--
+-- Constraints for table `tbldrivers`
+--
+ALTER TABLE `tbldrivers`
+  ADD CONSTRAINT `fk_driver_car` FOREIGN KEY (`carid`) REFERENCES `tblcars` (`carid`),
+  ADD CONSTRAINT `fk_driver_uset` FOREIGN KEY (`driverid`) REFERENCES `tblusers` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `tblpassengers`
+--
+ALTER TABLE `tblpassengers`
+  ADD CONSTRAINT `fk_passenger_pooling` FOREIGN KEY (`poolingid`) REFERENCES `tblpooling` (`poolingid`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_passenger_user` FOREIGN KEY (`pid`) REFERENCES `tblusers` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `tblpooling`
+--
+ALTER TABLE `tblpooling`
+  ADD CONSTRAINT `fk_pooling_bill` FOREIGN KEY (`billid`) REFERENCES `tblbill` (`billid`) ON DELETE SET NULL,
+  ADD CONSTRAINT `fk_pooling_car` FOREIGN KEY (`carid`) REFERENCES `tbldrivers` (`carid`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_pooling_route` FOREIGN KEY (`routeid`) REFERENCES `tblroutes` (`routeid`) ON DELETE SET NULL;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-INSERT INTO `tableuser` (`userid`, `username`, `password`, `phone_no`, `email`, `gender`, `date_of_birth`) VALUES ('1', 'khizar@', '12345', '03212153986', 'k213329@gmail.com', 'male', '2014-10-01');
-INSERT INTO `tablecar` (`carid`, `carname`, `company`, `type`, `seating`) VALUES ('1', 'Aqua', 'Toyota', 'Automatic', '4');
-INSERT INTO `tableroutes` (`routeid`, `description`, `time`, `carid`) VALUES ('1', 'North Nazimabad-> nagan chowrangi -> lucky one -> Gulshan chowrangi -> aladdin -> millinium -> Fast\r\n', '08:30:01', '1');
-INSERT INTO `tblroutes` (`routeid`, `description`, `date`, `carid`) VALUES ('2', 'Fast -> Millinium -> Aladdin -> Gulshan Chowrangi -> Lucky One -> Nagan Chowrangi -> North Nazimabad\r\n', current_timestamp(), '1');
